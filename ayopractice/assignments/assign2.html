@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        h3 {
+            margin-bottom: 20px;
+            color: #4CAF50;
+            text-align: center;
+        }
+
+        label {
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        input, select {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            display: block;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .message {
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        .error {
+            color: red;
+        }
+
+        .success {
+            color: green;
+        }
+
+        .user-data {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h3>User Registration</h3>
+        <form id="registrationForm" onsubmit="return validateForm(event)">
+            <label for="firstName">First Name</label>
+            <input type="text" id="firstName" name="firstName" required>
+            
+            <label for="surname">Surname</label>
+            <input type="text" id="surname" name="surname" required>
+            
+            <label for="lastName">Last Name</label>
+            <input type="text" id="lastName" name="lastName" required>
+            
+            <label for="country">Country</label>
+            <select id="country" name="country" required>
+                <option value="" disabled selected>Select your country</option>
+                <option value="Nigeria">Nigeria</option>
+                <option value="United States">United States</option>
+                <option value="United Kingdom">United Kingdom</option>
+                <!-- Add more options as needed -->
+            </select>
+
+            <label for="gender">Gender</label>
+            <select id="gender" name="gender" required>
+                <option value="" disabled selected>Select your gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+            </select>
+
+            <label for="dob">Date of Birth</label>
+            <input type="date" id="dob" name="dob" required>
+            
+            <label for="phoneNumber">Phone Number</label>
+            <input type="tel" id="phoneNumber" name="phoneNumber" required>
+            
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+            
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+            
+            <label for="confirmPassword">Confirm Password</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" required>
+            
+            <button type="submit">Submit</button>
+            <div id="message" class="message"></div>
+        </form>
+        <div id="userData" class="user-data"></div>
+    </div>
+
+    <script>
+        function validateForm(event) {
+            event.preventDefault();
+            
+            const form = document.getElementById('registrationForm');
+            const formData = new FormData(form);
+            const password = formData.get('password');
+            const confirmPassword = formData.get('confirmPassword');
+            const message = document.getElementById('message');
+            const userData = document.getElementById('userData');
+            
+            if (password !== confirmPassword) {
+                message.textContent = 'Passwords do not match. Please try again.';
+                message.className = 'message error';
+                return false;
+            } else {
+                message.textContent = '';
+                message.className = 'message';
+                userData.innerHTML = `
+                    <h3>User Information</h3>
+                    <p><strong>First Name:</strong> ${formData.get('firstName')}</p>
+                    <p><strong>Surname:</strong> ${formData.get('surname')}</p>
+                    <p><strong>Last Name:</strong> ${formData.get('lastName')}</p>
+                    <p><strong>Country:</strong> ${formData.get('country')}</p>
+                    <p><strong>Gender:</strong> ${formData.get('gender')}</p>
+                    <p><strong>Date of Birth:</strong> ${formData.get('dob')}</p>
+                    <p><strong>Phone Number:</strong> ${formData.get('phoneNumber')}</p>
+                    <p><strong>Email:</strong> ${formData.get('email')}</p>
+                `;
+                return false; // Prevent form submission
+            }
+        }
+    </script>
+</body>
+</html>
